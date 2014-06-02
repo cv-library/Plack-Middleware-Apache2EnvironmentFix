@@ -20,6 +20,13 @@ sub call {
     local $CGI::Cookie::MOD_PERL = 0;
 
     my $res = $self->app->($env);
+
+    # CGI under mod_perl calls initialize_globals() at the end of
+    # each request, but CGI::Compile calls it only at the start.  If
+    # we want both in the same mod_perl process, we need to call it
+    # as cleanup too.
+    CGI::initialize_globals() if defined &CGI::initialize_globals;
+
     return $res;
 }
 
