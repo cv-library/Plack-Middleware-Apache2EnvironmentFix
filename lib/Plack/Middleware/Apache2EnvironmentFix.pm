@@ -12,6 +12,7 @@ sub call {
     # but we also want it removed at run time.
     local $ENV{MOD_PERL};
     delete $ENV{MOD_PERL};
+    delete $env->{MOD_PERL};
 
     # Because we compile these modules under ModPerl::Registry,
     # we munge the internals for the duration of the Plack request.
